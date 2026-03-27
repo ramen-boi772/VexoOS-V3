@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vexo Site</title>
+<style>
+  body {
+    margin: 0;
+    padding: 40px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  }
+
+  canvas#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  h1, h3 {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 3em;
+    color: #00ffa3;
+    text-shadow: 0 0 8px #00ffa3;
+  }
+
+  h3 {
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #a3ffeb;
+    margin-bottom: 25px;
+  }
+
+  .links {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 15px;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  a {
+    display: block;
+    text-align: center;
+    padding: 16px 20px;
+    font-size: 1.2em;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+    color: #00ffa3;
+    background: rgba(0,255,163,0.05);
+    border: 1px solid rgba(0,255,163,0.3);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+  }
+
+  a:hover {
+    transform: translateY(-2px);
+    background: rgba(0,255,163,0.1);
+    box-shadow: 0 4px 12px rgba(0,255,163,0.2);
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px; }
+    h1 { font-size: 2.2em; }
+    h3 { font-size: 1em; }
+    a { font-size: 1.1em; padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<h1>Vexo SITE</h1>
+<h3>Link domain list for unblock stuff</h3>
+<h3>WE DO NOT OWN ANY OF THESE WEBSITES NOR DO WE TAKE CREDIT FOR THEM.</h3>
+
+<div class="links">
+  <a href="https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file" target="_blank">Minecraft Downloads</a>
+  <a href="https://turtletown71.github.io" target="_blank">Minecraft (beta-22w22b)</a>
+  <a href="https://orange1.freeddns.us" target="_blank">Fern</a>
+  <a href="https://overcloak.plyrnation.martinwguy.net" target="_blank">OPEN WEB</a>
+  <a href="https://basketball-stars-game.github.io/" target="_blank">Games</a>
+  <a href="https://unblockedgames76-pro.github.io" target="_blank">Unblocked Games</a>
+  <a href="https://pn.martinwguy.net" target="_blank">More Unblocked Games</a>
+  <a href="https://ramen-boi772.github.io/launcher-le-eaglercraft/" target="_blank">Launcher Le EaglerCraft</a>
+  <a href="https://ramen-boi772.github.io/windows-12/desktop.html" target="_blank">Win 12 (WEB-BASED VERSION)</a>
+  <a href="#">Extra Link 1</a>
+  <a href="#">Extra Link 2</a>
+  <a href="#">Extra Link 3</a>
+  <a href="#">Extra Link 4</a>
+  <a href="#">Extra Link 5</a>
+  <a href="#">Extra Link 6</a>
+  <a href="#">Extra Link 7</a>
+</div>
+
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray = [];
+let mouseX = 0;
+let mouseY = 0;
+let scrollY = 0;
+
+// Mouse movement for parallax
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+// Track scroll for subtle depth effect
+window.addEventListener('scroll', () => {
+  scrollY = window.scrollY;
+});
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.baseSize = Math.random() * 3 + 1;
+    this.size = this.baseSize;
+    this.speedX = (Math.random() - 0.5) * (Math.random() * 0.8 + 0.3);
+    this.speedY = (Math.random() - 0.5) * (Math.random() * 0.8 + 0.3);
+
+    const lofiColors = [
+      'rgba(255,200,150,0.2)',
+      'rgba(150,200,255,0.2)',
+      'rgba(200,150,255,0.2)',
+      'rgba(255,180,200,0.2)'
+    ];
+    this.color = lofiColors[Math.floor(Math.random() * lofiColors.length)];
+
+    this.pulseAngle = Math.random() * Math.PI * 2;
+    this.pulseSpeed = Math.random() * 0.03 + 0.01;
+    this.pulseRange = Math.random() * 0.8 + 0.2;
+    this.depthFactor = Math.random() * 0.2 + 0.1;
+    this.scrollFactor = Math.random() * 0.1 + 0.05;
+    this.swayOffset = Math.random() * 1000;
+  }
+
+  update() {
+    this.x += this.speedX + Math.sin(Date.now() * 0.001 + this.swayOffset) * 0.5;
+    this.y += this.speedY + Math.cos(Date.now() * 0.001 + this.swayOffset) * 0.5;
+
+    if (this.x < 0) this.x = canvas.width;
+    if (this.x > canvas.width) this.x = 0;
+    if (this.y < 0) this.y = canvas.height;
+    if (this.y > canvas.height) this.y = 0;
+
+    this.pulseAngle += this.pulseSpeed;
+    this.size = this.baseSize + Math.sin(this.pulseAngle) * (this.pulseRange * 0.3);
+
+    this.parallaxX = (mouseX - canvas.width / 2) * this.depthFactor;
+    this.parallaxY = (mouseY - canvas.height / 2) * this.depthFactor;
+    this.scrollOffset = scrollY * this.scrollFactor;
+  }
+
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 2;
+    ctx.beginPath();
+    ctx.arc(this.x + this.parallaxX, this.y + this.parallaxY - this.scrollOffset, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function initParticles(count = 60) {
+  particlesArray = [];
+  for (let i = 0; i < count; i++) {
+    particlesArray.push(new Particle());
+  }
+}
+
+function connectParticles(maxDistance = 100) {
+  for (let a = 0; a < particlesArray.length; a++) {
+    for (let b = a + 1; b < particlesArray.length; b++) {
+      const dx = (particlesArray[a].x + particlesArray[a].parallaxX) - (particlesArray[b].x + particlesArray[b].parallaxX);
+      const dy = (particlesArray[a].y + particlesArray[a].parallaxY) - (particlesArray[b].y + particlesArray[b].parallaxY);
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < maxDistance) {
+        ctx.strokeStyle = `rgba(200,200,255,${1 - distance / maxDistance})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(particlesArray[a].x + particlesArray[a].parallaxX, particlesArray[a].y + particlesArray[a].parallaxY);
+        ctx.lineTo(particlesArray[b].x + particlesArray[b].parallaxX, particlesArray[b].y + particlesArray[b].parallaxY);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particlesArray.forEach(p => { p.update(); p.draw(); });
+  connectParticles();
+  requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+</script>
+
+</body>
+</html>
