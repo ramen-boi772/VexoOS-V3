@@ -3,46 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VexoOS</title>
+<title>VexoOS Glass Upgrade</title>
 <style>
-  /* --- BASIC RESET --- */
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:#1a1a1a;color:#e0e0e0;}
+/* --- RESET --- */
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:#1a1a1a;color:#e0e0e0;}
 
-  /* --- PARTICLES --- */
-  canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+/* --- PARTICLES --- */
+canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 
-  /* --- DESKTOP --- */
-  #desktop{position:relative;z-index:1;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,80px);gap:20px;}
+/* --- DESKTOP --- */
+#desktop{position:relative;z-index:1;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,80px);gap:20px;}
 
-  /* --- APP ICONS --- */
-  .app-icon{cursor:pointer;text-align:center;transition:all 0.2s;}
-  .app-icon:hover{transform:scale(1.1);}
-  .app-icon img{width:48px;height:48px;margin-bottom:5px;}
+/* --- APP ICONS --- */
+.app-icon{cursor:pointer;text-align:center;transition:all 0.2s;}
+.app-icon:hover{transform:scale(1.1);}
+.app-icon img{width:48px;height:48px;margin-bottom:5px;}
 
-  /* --- TASKBAR --- */
-  #taskbar{position:fixed;bottom:0;width:100%;height:55px;display:flex;justify-content:center;align-items:center;gap:20px;backdrop-filter:blur(10px);background:rgba(20,20,20,0.6);z-index:10;border-top:1px solid #00ffa3;}
-  #start-btn{position:absolute;left:20px;cursor:pointer;font-size:24px;}
+/* --- TASKBAR --- */
+#taskbar{position:fixed;bottom:0;width:100%;height:55px;display:flex;justify-content:center;align-items:center;gap:20px;backdrop-filter:blur(10px);background:rgba(20,20,20,0.6);z-index:10;border-top:1px solid #00ffa3;}
+#start-btn{position:absolute;left:20px;cursor:pointer;font-size:24px;backdrop-filter:blur(8px);background:rgba(0,255,163,0.1);padding:8px;border-radius:8px;transition:all 0.2s;}
+#start-btn:hover{background:rgba(0,255,163,0.2);}
 
-  /* --- START MENU --- */
-  #start-menu{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:300px;background:rgba(20,20,20,0.95);border-radius:12px;padding:20px;display:none;box-shadow:0 0 20px #00ffa3;}
-  #start-menu div{padding:10px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
-  #start-menu div:hover{background:rgba(0,255,163,0.1);}
+/* --- START MENU --- */
+#start-menu{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:300px;background:rgba(20,20,20,0.6);border-radius:12px;padding:20px;display:none;box-shadow:0 0 20px #00ffa3;backdrop-filter:blur(10px);}
+#start-menu div{padding:10px;border-radius:8px;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px);background:rgba(0,255,163,0.05);border:1px solid rgba(0,255,163,0.2);}
+#start-menu div:hover{background:rgba(0,255,163,0.15);}
 
-  /* --- WINDOW --- */
-  .window{position:absolute;width:600px;height:400px;background:rgba(20,20,20,0.9);border-radius:12px;display:none;flex-direction:column;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 0 20px #00ffa3;}
-  .window-header{padding:10px;cursor:move;display:flex;justify-content:space-between;align-items:center;background:rgba(0,255,163,0.1);}
-  .window-header span{font-weight:bold;color:#00ffa3;}
-  .window-header button{background:none;border:none;color:#00ffa3;font-size:18px;cursor:pointer;}
-  .window-content{flex:1;padding:10px;overflow:auto;}
+/* --- WINDOW --- */
+.window{position:absolute;width:600px;height:400px;background:rgba(20,20,20,0.6);border-radius:12px;display:none;flex-direction:column;overflow:hidden;backdrop-filter:blur(12px);box-shadow:0 0 30px #00ffa3;z-index:5;transition:transform 0.2s,opacity 0.2s;}
+.window.minimized{opacity:0;transform:scale(0.8);}
+.window-header{padding:10px;cursor:move;display:flex;justify-content:space-between;align-items:center;background:rgba(0,255,163,0.1);border-bottom:1px solid rgba(0,255,163,0.3);}
+.window-header span{font-weight:bold;color:#00ffa3;}
+.window-header button{background:none;border:none;color:#00ffa3;font-size:18px;cursor:pointer;}
+.window-content{flex:1;padding:10px;overflow:auto;display:flex;flex-direction:column;gap:5px;}
 
-  /* --- BUTTONS --- */
-  button{cursor:pointer;}
+/* --- GLASS BUTTONS --- */
+.glass-btn{padding:10px 15px;border-radius:8px;background:rgba(0,255,163,0.05);border:1px solid rgba(0,255,163,0.3);color:#00ffa3;text-align:center;text-decoration:none;transition:all 0.3s;backdrop-filter:blur(8px);}
+.glass-btn:hover{background:rgba(0,255,163,0.15);box-shadow:0 5px 15px rgba(0,255,163,0.3);}
 
-  /* --- CONTEXT MENU --- */
-  #context-menu{position:absolute;background:#222;padding:10px;display:none;z-index:999;border-radius:8px;}
-  #context-menu div{padding:5px;cursor:pointer;}
-  #context-menu div:hover{background:rgba(0,255,163,0.1);}
+/* --- CALC & NOTES --- */
+textarea{width:100%;height:100%;background:rgba(0,0,0,0.2);border:none;color:#e0e0e0;padding:10px;border-radius:8px;resize:none;}
+input#calcDisplay,input#browser-url{width:100%;padding:5px;border-radius:8px;border:1px solid rgba(0,255,163,0.3);background:rgba(0,0,0,0.2);color:#00ffa3;backdrop-filter:blur(5px);}
+button{cursor:pointer;backdrop-filter:blur(8px);background:rgba(0,255,163,0.05);border:1px solid rgba(0,255,163,0.3);color:#00ffa3;border-radius:8px;padding:5px;transition:all 0.2s;}
+button:hover{background:rgba(0,255,163,0.15);box-shadow:0 4px 12px rgba(0,255,163,0.3);}
+
+/* --- IFRAME --- */
+iframe{width:100%;height:100%;border:none;border-radius:8px;}
 </style>
 </head>
 <body>
@@ -75,16 +82,16 @@
 <!-- WINDOWS -->
 <div class="window" id="vexo">
   <div class="window-header"><span>Vexo</span><div><button onclick="closeApp('vexo')">&times;</button></div></div>
-  <div class="window-content" style="display:flex;flex-direction:column;gap:5px;">
-    <a href="#" onclick="openBrowser('https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file')">Minecraft Downloads</a>
-    <a href="#" onclick="openBrowser('https://turtletown71.github.io')">Minecraft (beta-22w22b)</a>
-    <a href="#" onclick="openBrowser('https://orange1.freeddns.us')">Fern</a>
-    <a href="#" onclick="openBrowser('https://overcloak.plyrnation.martinwguy.net')">OPEN WEB</a>
-    <a href="#" onclick="openBrowser('https://basketball-stars-game.github.io/')">Games</a>
-    <a href="#" onclick="openBrowser('https://unblockedgames76-pro.github.io')">Unblocked Games</a>
-    <a href="#" onclick="openBrowser('https://pn.martinwguy.net')">More Unblocked Games</a>
-    <a href="#" onclick="openBrowser('https://ramen-boi772.github.io/launcher-le-eaglercraft/')">Launcher Le EaglerCraft</a>
-    <a href="#" onclick="openBrowser('https://ramen-boi772.github.io/windows-12/desktop.html')">Win 12 (WEB)</a>
+  <div class="window-content">
+    <a class="glass-btn" href="#" onclick="openBrowser('https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file')">Minecraft Downloads</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://turtletown71.github.io')">Minecraft (beta-22w22b)</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://orange1.freeddns.us')">Fern</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://overcloak.plyrnation.martinwguy.net')">OPEN WEB</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://basketball-stars-game.github.io/')">Games</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://unblockedgames76-pro.github.io')">Unblocked Games</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://pn.martinwguy.net')">More Unblocked Games</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://ramen-boi772.github.io/launcher-le-eaglercraft/')">Launcher Le EaglerCraft</a>
+    <a class="glass-btn" href="#" onclick="openBrowser('https://ramen-boi772.github.io/windows-12/desktop.html')">Win 12 (WEB)</a>
   </div>
 </div>
 
@@ -95,22 +102,22 @@
       <button onclick="goBack()">←</button>
       <button onclick="goForward()">→</button>
       <button onclick="reloadPage()">⟳</button>
-      <input id="browser-url" placeholder="Enter URL..." style="flex:1;padding:5px;">
+      <input id="browser-url" placeholder="Enter URL...">
       <button onclick="loadURL()">Go</button>
     </div>
-    <iframe id="browser-frame" style="flex:1;border:none;"></iframe>
+    <iframe id="browser-frame"></iframe>
   </div>
 </div>
 
 <div class="window" id="notes">
   <div class="window-header"><span>Notes</span><div><button onclick="closeApp('notes')">&times;</button></div></div>
-  <div class="window-content"><textarea id="note" style="width:100%;height:100%"></textarea></div>
+  <div class="window-content"><textarea id="note"></textarea></div>
 </div>
 
 <div class="window" id="calc">
   <div class="window-header"><span>Calculator</span><div><button onclick="closeApp('calc')">&times;</button></div></div>
   <div class="window-content">
-    <input id="calcDisplay" style="width:100%">
+    <input id="calcDisplay">
     <div style="display:flex;gap:5px;margin-top:5px;">
       <button onclick="calc('1')">1</button>
       <button onclick="calc('2')">2</button>
@@ -133,22 +140,20 @@ function toggleStart(){
 }
 
 /* --- OPEN/CLOSE APP --- */
-function openApp(id){document.getElementById(id).style.display="flex";}
+let zIndexCounter=5;
+function openApp(id){
+  const w=document.getElementById(id);
+  w.style.display="flex";
+  w.style.zIndex=++zIndexCounter;
+  w.classList.remove("minimized");
+}
 function closeApp(id){document.getElementById(id).style.display="none";}
 
 /* --- BROWSER --- */
 const browserFrame=document.getElementById("browser-frame");
 const browserURL=document.getElementById("browser-url");
-function loadURL(){
-  let url=browserURL.value.trim();
-  if(!url.startsWith("http")) url="https://"+url;
-  browserFrame.src=url;
-}
-function openBrowser(url){
-  openApp("browser");
-  browserFrame.src=url;
-  browserURL.value=url;
-}
+function loadURL(){let url=browserURL.value.trim();if(!url.startsWith("http")) url="https://"+url;browserFrame.src=url;}
+function openBrowser(url){openApp("browser");browserFrame.src=url;browserURL.value=url;}
 function goBack(){browserFrame.contentWindow.history.back();}
 function goForward(){browserFrame.contentWindow.history.forward();}
 function reloadPage(){browserFrame.contentWindow.location.reload();}
@@ -156,14 +161,16 @@ function reloadPage(){browserFrame.contentWindow.location.reload();}
 /* --- DRAG WINDOWS --- */
 document.querySelectorAll(".window-header").forEach(h=>{
   let w=h.parentElement;
-  h.onmousedown=e=>{
-    let x=e.clientX-w.offsetLeft;
-    let y=e.clientY-w.offsetTop;
-    document.onmousemove=e=>{
-      w.style.left=e.clientX-x+"px";
-      w.style.top=e.clientY-y+"px";
+  h.onmousedown=function(e){
+    openApp(w.id);
+    let offsetX=e.clientX-w.offsetLeft;
+    let offsetY=e.clientY-w.offsetTop;
+    function mouseMoveHandler(e){
+      w.style.left=e.clientX-offsetX+"px";
+      w.style.top=e.clientY-offsetY+"px";
     }
-    document.onmouseup=()=>document.onmousemove=null;
+    document.addEventListener('mousemove',mouseMoveHandler);
+    document.addEventListener('mouseup',()=>document.removeEventListener('mousemove',mouseMoveHandler),{once:true});
   };
 });
 
@@ -188,27 +195,22 @@ function renderFiles(){
 }
 renderFiles();
 
-/* --- RIGHT CLICK MENU --- */
-document.addEventListener("contextmenu",e=>{
-  e.preventDefault();
-  let m=document.getElementById("context-menu");
-  m.style.left=e.pageX+"px"; m.style.top=e.pageY+"px"; m.style.display="block";
-});
-document.addEventListener("click",()=>document.getElementById("context-menu")?.style.display="none");
-
 /* --- PARTICLES --- */
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
-canvas.width=innerWidth; canvas.height=innerHeight;
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}
+window.addEventListener("resize",resize);resize();
+
 let particles=[];
-for(let i=0;i<80;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1});
-}
+for(let i=0;i<80;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1})}
+
 function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   for(let p of particles){
-    p.x+=Math.random()-0.5; p.y+=Math.random()-0.5;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle="#00ffa3"; ctx.fill();
+    p.x+=Math.random()-0.5;p.y+=Math.random()-0.5;
+    if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle="#00ffa3";ctx.fill();
   }
   requestAnimationFrame(animateParticles);
 }
