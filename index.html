@@ -3,445 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vexo WebOS</title>
+<title>VexoOS</title>
 <style>
-/* ===== BODY / DESKTOP ===== */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  overflow: hidden;
-  background: linear-gradient(135deg,#121212,#1a1a1a,#222);
-  color: #e0e0e0;
-}
+  /* --- BASIC RESET --- */
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:#1a1a1a;color:#e0e0e0;}
 
-#background-particles {
-  position: fixed;
-  top:0; left:0;
-  width:100vw; height:100vh;
-  z-index:0;
-  pointer-events:none;
-}
+  /* --- PARTICLES --- */
+  canvas#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 
-/* ===== TASKBAR ===== */
-#taskbar {
-  position: fixed;
-  bottom:0; left:0;
-  width:100%; height:50px;
-  background: rgba(30,30,30,0.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  z-index:20;
-  border-top:1px solid rgba(0,255,163,0.2);
-  backdrop-filter: blur(10px);
-}
+  /* --- DESKTOP --- */
+  #desktop{position:relative;z-index:1;padding:20px;display:grid;grid-template-columns:repeat(auto-fill,80px);gap:20px;}
 
-.taskbar-item {
-  color: #00ffa3;
-  cursor: pointer;
-  user-select:none;
-  text-align:center;
-  font-size:12px;
-}
+  /* --- APP ICONS --- */
+  .app-icon{cursor:pointer;text-align:center;transition:all 0.2s;}
+  .app-icon:hover{transform:scale(1.1);}
+  .app-icon img{width:48px;height:48px;margin-bottom:5px;}
 
-.taskbar-item img {
-  width:28px; height:28px;
-  display:block; margin:0 auto 2px;
-}
+  /* --- TASKBAR --- */
+  #taskbar{position:fixed;bottom:0;width:100%;height:55px;display:flex;justify-content:center;align-items:center;gap:20px;backdrop-filter:blur(10px);background:rgba(20,20,20,0.6);z-index:10;border-top:1px solid #00ffa3;}
+  #start-btn{position:absolute;left:20px;cursor:pointer;font-size:24px;}
 
-/* ===== DESKTOP ICONS ===== */
-#desktop {
-  position: relative;
-  width:100vw; height:100vh;
-  z-index:1;
-  display:grid;
-  grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
-  padding:40px; gap:20px;
-}
+  /* --- START MENU --- */
+  #start-menu{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);width:300px;background:rgba(20,20,20,0.95);border-radius:12px;padding:20px;display:none;box-shadow:0 0 20px #00ffa3;}
+  #start-menu div{padding:10px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+  #start-menu div:hover{background:rgba(0,255,163,0.1);}
 
-.app-icon {
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  text-align:center;
-  color:#00ffa3;
-  cursor:pointer;
-  border-radius:12px;
-  transition:all 0.2s ease;
-}
-.app-icon img {width:48px;height:48px;margin-bottom:6px;}
-.app-icon:hover{transform:scale(1.1);}
+  /* --- WINDOW --- */
+  .window{position:absolute;width:600px;height:400px;background:rgba(20,20,20,0.9);border-radius:12px;display:none;flex-direction:column;overflow:hidden;backdrop-filter:blur(8px);box-shadow:0 0 20px #00ffa3;}
+  .window-header{padding:10px;cursor:move;display:flex;justify-content:space-between;align-items:center;background:rgba(0,255,163,0.1);}
+  .window-header span{font-weight:bold;color:#00ffa3;}
+  .window-header button{background:none;border:none;color:#00ffa3;font-size:18px;cursor:pointer;}
+  .window-content{flex:1;padding:10px;overflow:auto;}
 
-/* ===== WINDOWS ===== */
-.window {
-  position:absolute;
-  width:600px; height:500px;
-  background: rgba(20,20,20,0.95);
-  backdrop-filter: blur(12px);
-  border-radius:16px;
-  border:1px solid rgba(0,255,163,0.25);
-  box-shadow:0 10px 25px rgba(0,255,163,0.3);
-  display:none;
-  flex-direction:column;
-  z-index:10;
-  overflow:hidden;
-}
+  /* --- BUTTONS --- */
+  button{cursor:pointer;}
 
-.window-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background: rgba(0,255,163,0.05);
-  padding:10px 16px;
-  cursor:move;
-}
-
-.window-header span{font-weight:bold;color:#00ffa3;}
-.window-header button {
-  background:transparent;
-  border:none;
-  color:#00ffa3;
-  font-weight:bold;
-  cursor:pointer;
-  margin-left:5px;font-size:18px;
-}
-
-.window-content {
-  flex:1;
-  padding:15px;
-  overflow-y:auto;
-  color:#e0e0e0;
-}
-
-/* Links style for Vexo app */
-.links { display:grid; gap:10px; }
-.links a {
-  display:block;
-  padding:10px 12px;
-  border-radius:10px;
-  background: rgba(0,255,163,0.05);
-  border:1px solid rgba(0,255,163,0.2);
-  text-decoration:none; color:#00ffa3;
-  transition:all 0.2s ease;
-}
-.links a:hover{
-  transform:translateY(-2px);
-  background:rgba(0,255,163,0.1);
-  box-shadow:0 6px 20px rgba(0,255,163,0.2);
-}
-
-/* Notes App */
-#notes-textarea{
-  width:100%; height:100%; resize:none; background:rgba(0,0,0,0.1); border:none; padding:10px; color:#e0e0e0; font-size:14px;
-}
-
-/* Calculator */
-.calc-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:5px;
-}
-.calc-grid button{
-  padding:20px;
-  font-size:18px;
-  border:none;
-  border-radius:8px;
-  background: rgba(0,255,163,0.05);
-  color:#00ffa3;
-  cursor:pointer;
-  transition:all 0.2s ease;
-}
-.calc-grid button:hover{background:rgba(0,255,163,0.1);}
-
-/* File Explorer */
-.file-folder{padding:10px;margin:5px;border-radius:8px;background:rgba(0,255,163,0.05);cursor:pointer;}
-.file-folder:hover{background:rgba(0,255,163,0.1);}
-
-/* Breadcrumb */
-#breadcrumb span{cursor:pointer;text-decoration:underline;margin-right:5px;}
-
-/* Responsive */
-@media(max-width:600px){
-  .window{width:90%;height:70%;}
-  .app-icon img{width:36px;height:36px;}
-}
+  /* --- CONTEXT MENU --- */
+  #context-menu{position:absolute;background:#222;padding:10px;display:none;z-index:999;border-radius:8px;}
+  #context-menu div{padding:5px;cursor:pointer;}
+  #context-menu div:hover{background:rgba(0,255,163,0.1);}
 </style>
 </head>
 <body>
 
-<!-- PARTICLE BACKGROUND -->
-<canvas id="background-particles"></canvas>
+<canvas id="particles"></canvas>
 
 <!-- DESKTOP ICONS -->
 <div id="desktop">
-  <div class="app-icon" data-app="vexo"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png"><div>Vexo</div></div>
-  <div class="app-icon" data-app="calculator"><img src="https://cdn-icons-png.flaticon.com/512/992/992651.png"><div>Calculator</div></div>
-  <div class="app-icon" data-app="notes"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828304.png"><div>Notes</div></div>
-  <div class="app-icon" data-app="files"><img src="https://cdn-icons-png.flaticon.com/512/136/136522.png"><div>Files</div></div>
-  <div class="app-icon" data-app="settings"><img src="https://cdn-icons-png.flaticon.com/512/3524/3524631.png"><div>Settings</div></div>
+  <div class="app-icon" onclick="openApp('vexo')"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png"><div>Vexo</div></div>
+  <div class="app-icon" onclick="openApp('browser')"><img src="https://cdn-icons-png.flaticon.com/512/545/545705.png"><div>Browser</div></div>
+  <div class="app-icon" onclick="openApp('notes')"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828304.png"><div>Notes</div></div>
+  <div class="app-icon" onclick="openApp('calc')"><img src="https://cdn-icons-png.flaticon.com/512/992/992651.png"><div>Calculator</div></div>
+  <div class="app-icon" onclick="openApp('files')"><img src="https://cdn-icons-png.flaticon.com/512/136/136522.png"><div>Files</div></div>
 </div>
 
 <!-- TASKBAR -->
-<div id="taskbar"></div>
+<div id="taskbar">
+  <div id="start-btn" onclick="toggleStart()">🪟</div>
+</div>
 
-<!-- ===== WINDOWS ===== -->
+<!-- START MENU -->
+<div id="start-menu">
+  <div onclick="openApp('vexo')">Vexo</div>
+  <div onclick="openApp('browser')">Browser</div>
+  <div onclick="openApp('notes')">Notes</div>
+  <div onclick="openApp('calc')">Calculator</div>
+  <div onclick="openApp('files')">Files</div>
+</div>
 
-<!-- VEXO WINDOW -->
-<div class="window" id="vexo-window">
-  <div class="window-header"><span>Vexo Site</span>
-    <div>
-      <button class="min-btn">&#8211;</button>
-      <button class="max-btn">&#9723;</button>
-      <button class="close-btn">&times;</button>
-    </div>
+<!-- WINDOWS -->
+<div class="window" id="vexo">
+  <div class="window-header"><span>Vexo</span><div><button onclick="closeApp('vexo')">&times;</button></div></div>
+  <div class="window-content" style="display:flex;flex-direction:column;gap:5px;">
+    <a href="#" onclick="openBrowser('https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file')">Minecraft Downloads</a>
+    <a href="#" onclick="openBrowser('https://turtletown71.github.io')">Minecraft (beta-22w22b)</a>
+    <a href="#" onclick="openBrowser('https://orange1.freeddns.us')">Fern</a>
+    <a href="#" onclick="openBrowser('https://overcloak.plyrnation.martinwguy.net')">OPEN WEB</a>
+    <a href="#" onclick="openBrowser('https://basketball-stars-game.github.io/')">Games</a>
+    <a href="#" onclick="openBrowser('https://unblockedgames76-pro.github.io')">Unblocked Games</a>
+    <a href="#" onclick="openBrowser('https://pn.martinwguy.net')">More Unblocked Games</a>
+    <a href="#" onclick="openBrowser('https://ramen-boi772.github.io/launcher-le-eaglercraft/')">Launcher Le EaglerCraft</a>
+    <a href="#" onclick="openBrowser('https://ramen-boi772.github.io/windows-12/desktop.html')">Win 12 (WEB)</a>
   </div>
+</div>
+
+<div class="window" id="browser">
+  <div class="window-header"><span>Browser</span><div><button onclick="closeApp('browser')">&times;</button></div></div>
+  <div class="window-content" style="display:flex;flex-direction:column;height:100%;">
+    <div style="display:flex;gap:5px;padding-bottom:5px;">
+      <button onclick="goBack()">←</button>
+      <button onclick="goForward()">→</button>
+      <button onclick="reloadPage()">⟳</button>
+      <input id="browser-url" placeholder="Enter URL..." style="flex:1;padding:5px;">
+      <button onclick="loadURL()">Go</button>
+    </div>
+    <iframe id="browser-frame" style="flex:1;border:none;"></iframe>
+  </div>
+</div>
+
+<div class="window" id="notes">
+  <div class="window-header"><span>Notes</span><div><button onclick="closeApp('notes')">&times;</button></div></div>
+  <div class="window-content"><textarea id="note" style="width:100%;height:100%"></textarea></div>
+</div>
+
+<div class="window" id="calc">
+  <div class="window-header"><span>Calculator</span><div><button onclick="closeApp('calc')">&times;</button></div></div>
   <div class="window-content">
-    <div class="links">
-      <a href="https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file" target="_blank">Minecraft Downloads</a>
-      <a href="https://turtletown71.github.io" target="_blank">Minecraft (beta-22w22b)</a>
-      <a href="https://orange1.freeddns.us" target="_blank">Fern</a>
-      <a href="https://overcloak.plyrnation.martinwguy.net" target="_blank">OPEN WEB</a>
-      <a href="https://basketball-stars-game.github.io/" target="_blank">Games</a>
-      <a href="https://unblockedgames76-pro.github.io" target="_blank">Unblocked Games</a>
-      <a href="https://pn.martinwguy.net" target="_blank">More Unblocked Games</a>
-      <a href="https://ramen-boi772.github.io/launcher-le-eaglercraft/" target="_blank">Launcher Le EaglerCraft</a>
-      <a href="https://ramen-boi772.github.io/windows-12/desktop.html" target="_blank">Win 12 (WEB-BASED VERSION)</a>
+    <input id="calcDisplay" style="width:100%">
+    <div style="display:flex;gap:5px;margin-top:5px;">
+      <button onclick="calc('1')">1</button>
+      <button onclick="calc('2')">2</button>
+      <button onclick="calc('+')">+</button>
+      <button onclick="solve()">=</button>
     </div>
   </div>
 </div>
 
-<!-- CALCULATOR WINDOW -->
-<div class="window" id="calculator-window">
-  <div class="window-header"><span>Calculator</span>
-    <div>
-      <button class="min-btn">&#8211;</button>
-      <button class="max-btn">&#9723;</button>
-      <button class="close-btn">&times;</button>
-    </div>
-  </div>
-  <div class="window-content">
-    <input type="text" id="calc-display" readonly style="width:100%;padding:10px;margin-bottom:5px;font-size:20px;background:rgba(0,0,0,0.1);border:none;color:#e0e0e0;">
-    <div class="calc-grid">
-      <button>7</button><button>8</button><button>9</button><button>/</button>
-      <button>4</button><button>5</button><button>6</button><button>*</button>
-      <button>1</button><button>2</button><button>3</button><button>-</button>
-      <button>0</button><button>.</button><button>=</button><button>+</button>
-    </div>
-  </div>
-</div>
-
-<!-- NOTES WINDOW -->
-<div class="window" id="notes-window">
-  <div class="window-header"><span>Notes</span>
-    <div>
-      <button class="min-btn">&#8211;</button>
-      <button class="max-btn">&#9723;</button>
-      <button class="close-btn">&times;</button>
-    </div>
-  </div>
-  <div class="window-content">
-    <textarea id="notes-textarea" placeholder="Write your notes here..."></textarea>
-  </div>
-</div>
-
-<!-- FILE EXPLORER WINDOW -->
-<div class="window" id="files-window">
-  <div class="window-header"><span>File Explorer</span>
-    <div>
-      <button class="min-btn">&#8211;</button>
-      <button class="max-btn">&#9723;</button>
-      <button class="close-btn">&times;</button>
-    </div>
-  </div>
-  <div class="window-content">
-    <div id="breadcrumb" style="margin-bottom:10px;color:#00ffa3;"></div>
-    <div id="file-content"></div>
-  </div>
-</div>
-
-<!-- SETTINGS WINDOW -->
-<div class="window" id="settings-window">
-  <div class="window-header"><span>Settings</span>
-    <div>
-      <button class="min-btn">&#8211;</button>
-      <button class="max-btn">&#9723;</button>
-      <button class="close-btn">&times;</button>
-    </div>
-  </div>
-  <div class="window-content">
-    <h3>Settings Panel</h3>
-    <label><input type="checkbox" id="toggle-particles" checked> Show Particle Background</label>
-  </div>
+<div class="window" id="files">
+  <div class="window-header"><span>Files</span><div><button onclick="closeApp('files')">&times;</button></div></div>
+  <div class="window-content" id="fileArea"></div>
 </div>
 
 <script>
-// ===== PARTICLE BACKGROUND =====
-const canvas = document.getElementById('background-particles');
-const ctx = canvas.getContext('2d');
-function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-resizeCanvas(); window.addEventListener('resize',resizeCanvas);
+/* --- START MENU --- */
+function toggleStart(){
+  let m=document.getElementById("start-menu");
+  m.style.display = m.style.display==="block"?"none":"block";
+}
+
+/* --- OPEN/CLOSE APP --- */
+function openApp(id){document.getElementById(id).style.display="flex";}
+function closeApp(id){document.getElementById(id).style.display="none";}
+
+/* --- BROWSER --- */
+const browserFrame=document.getElementById("browser-frame");
+const browserURL=document.getElementById("browser-url");
+function loadURL(){
+  let url=browserURL.value.trim();
+  if(!url.startsWith("http")) url="https://"+url;
+  browserFrame.src=url;
+}
+function openBrowser(url){
+  openApp("browser");
+  browserFrame.src=url;
+  browserURL.value=url;
+}
+function goBack(){browserFrame.contentWindow.history.back();}
+function goForward(){browserFrame.contentWindow.history.forward();}
+function reloadPage(){browserFrame.contentWindow.location.reload();}
+
+/* --- DRAG WINDOWS --- */
+document.querySelectorAll(".window-header").forEach(h=>{
+  let w=h.parentElement;
+  h.onmousedown=e=>{
+    let x=e.clientX-w.offsetLeft;
+    let y=e.clientY-w.offsetTop;
+    document.onmousemove=e=>{
+      w.style.left=e.clientX-x+"px";
+      w.style.top=e.clientY-y+"px";
+    }
+    document.onmouseup=()=>document.onmousemove=null;
+  };
+});
+
+/* --- NOTES --- */
+let note=document.getElementById("note");
+note.value=localStorage.getItem("note")||"";
+note.oninput=()=>localStorage.setItem("note",note.value);
+
+/* --- CALC --- */
+function calc(v){calcDisplay.value+=v;}
+function solve(){calcDisplay.value=eval(calcDisplay.value);}
+
+/* --- FILES --- */
+let fs={Documents:["Resume.txt","Project.txt"],Images:["Pic.png"]};
+function renderFiles(){
+  let area=document.getElementById("fileArea"); area.innerHTML="";
+  for(let f in fs){
+    let d=document.createElement("div"); d.innerText=f;
+    d.onclick=()=>alert(fs[f].join(", "));
+    area.appendChild(d);
+  }
+}
+renderFiles();
+
+/* --- RIGHT CLICK MENU --- */
+document.addEventListener("contextmenu",e=>{
+  e.preventDefault();
+  let m=document.getElementById("context-menu");
+  m.style.left=e.pageX+"px"; m.style.top=e.pageY+"px"; m.style.display="block";
+});
+document.addEventListener("click",()=>document.getElementById("context-menu")?.style.display="none");
+
+/* --- PARTICLES --- */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth; canvas.height=innerHeight;
 let particles=[];
-for(let i=0;i<80;i++){particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*0.5,dy:(Math.random()-0.5)*0.5});}
-function animate(){
+for(let i=0;i<80;i++){
+  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1});
+}
+function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0||p.x>canvas.width)p.dx*=-1;
-    if(p.y<0||p.y>canvas.height)p.dy*=-1;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle="rgba(0,255,163,0.2)";
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-// ===== APP WINDOWS =====
-document.querySelectorAll('.app-icon').forEach(icon=>{
-  icon.addEventListener('click', ()=>{
-    const appId = icon.dataset.app;
-    const win = document.getElementById(appId+'-window');
-    win.style.display='flex';
-    win.style.left='50px'; win.style.top='50px';
-    win.dataset.minimized='false';
-    addToTaskbar(appId, icon.innerText, icon.querySelector('img').src);
-  });
-});
-
-// ===== DRAG WINDOWS =====
-document.querySelectorAll('.window-header').forEach(header=>{
-  let win=header.parentElement; let offsetX=0,offsetY=0,isDown=false;
-  header.addEventListener('mousedown',e=>{
-    if(e.target.tagName==='BUTTON')return;
-    isDown=true; offsetX=e.clientX-win.offsetLeft; offsetY=e.clientY-win.offsetTop;
-    win.style.zIndex=1000;
-  });
-  document.addEventListener('mousemove',e=>{
-    if(isDown){win.style.left=(e.clientX-offsetX)+'px';win.style.top=(e.clientY-offsetY)+'px';}
-  });
-  document.addEventListener('mouseup',()=>{isDown=false;win.style.zIndex=10;});
-});
-
-// ===== TASKBAR MANAGEMENT =====
-function addToTaskbar(id,name,iconSrc){
-  if(document.querySelector('#taskbar .'+id)) return;
-  const item=document.createElement('div'); item.classList.add('taskbar-item',id);
-  item.innerHTML=`<img src="${iconSrc}"><div>${name}</div>`;
-  item.addEventListener('click',()=>{
-    const win=document.getElementById(id+'-window');
-    win.style.display=(win.style.display=='flex')?'none':'flex';
-  });
-  document.getElementById('taskbar').appendChild(item);
-}
-document.querySelectorAll('.close-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const win=btn.closest('.window'); win.style.display='none';
-  });
-});
-document.querySelectorAll('.min-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const win=btn.closest('.window');
-    if(win.dataset.minimized==='true'){
-      win.style.height=win.dataset.oldHeight; win.style.width=win.dataset.oldWidth; win.dataset.minimized='false';
-    } else {
-      win.dataset.oldHeight=win.offsetHeight+'px'; win.dataset.oldWidth=win.offsetWidth+'px';
-      win.style.height='40px'; win.style.width='200px'; win.dataset.minimized='true';
-    }
-  });
-});
-document.querySelectorAll('.max-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const win=btn.closest('.window');
-    if(win.dataset.maximized==='true'){
-      win.style.width=win.dataset.oldWidth; win.style.height=win.dataset.oldHeight;
-      win.style.left=win.dataset.oldLeft; win.style.top=win.dataset.oldTop;
-      win.dataset.maximized='false';
-    } else {
-      win.dataset.oldWidth=win.offsetWidth+'px'; win.dataset.oldHeight=win.offsetHeight+'px';
-      win.dataset.oldLeft=win.offsetLeft+'px'; win.dataset.oldTop=win.offsetTop+'px';
-      win.style.left='0'; win.style.top='0'; win.style.width='100vw'; win.style.height='100vh';
-      win.dataset.maximized='true';
-    }
-  });
-});
-
-// ===== CALCULATOR =====
-const calcDisplay=document.getElementById('calc-display');
-document.querySelectorAll('#calculator-window .calc-grid button').forEach(btn=>{
-  btn.addEventListener('click',()=>{const v=btn.innerText;
-    if(v=='='){try{calcDisplay.value=eval(calcDisplay.value);}catch(e){calcDisplay.value='Error';}}
-    else calcDisplay.value+=v;
-  });
-});
-
-// ===== NOTES =====
-const notesArea=document.getElementById('notes-textarea');
-if(localStorage.getItem('notes')) notesArea.value=localStorage.getItem('notes');
-notesArea.addEventListener('input',()=>{localStorage.setItem('notes',notesArea.value);});
-
-// ===== SETTINGS =====
-document.getElementById('toggle-particles').addEventListener('change',(e)=>{
-  canvas.style.display=e.target.checked?'block':'none';
-});
-
-// ===== FILE EXPLORER =====
-const fileSystem = {
-  "root": {
-    "Documents": {
-      "Resume.txt": "This is a demo resume file.",
-      "Project.docx": "Project document content here."
-    },
-    "Images": {
-      "Logo.png": "Image file placeholder",
-      "Screenshot.jpg": "Screenshot placeholder"
-    },
-    "Downloads": {
-      "Game.zip": "Download link placeholder",
-      "Setup.exe": "Setup file placeholder"
-    }
+  for(let p of particles){
+    p.x+=Math.random()-0.5; p.y+=Math.random()-0.5;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle="#00ffa3"; ctx.fill();
   }
-};
-
-let currentPath = ["root"];
-
-function renderFileExplorer() {
-  const container = document.getElementById("file-content");
-  container.innerHTML = "";
-  let folder = fileSystem;
-  currentPath.forEach(p => folder = folder[p]);
-
-  // Breadcrumb
-  const breadcrumbDiv = document.getElementById("breadcrumb");
-  breadcrumbDiv.innerHTML = currentPath.map((p, i) => 
-    `<span data-index="${i}">${p}</span>`).join(" / ");
-  breadcrumbDiv.querySelectorAll("span").forEach(span => {
-    span.addEventListener("click",()=>{
-      const idx = parseInt(span.dataset.index);
-      currentPath = currentPath.slice(0, idx+1);
-      renderFileExplorer();
-    });
-  });
-
-  // Render folders/files
-  for(let key in folder){
-    const itemDiv = document.createElement("div");
-    const isFolder = typeof folder[key] === "object";
-    itemDiv.className = isFolder ? "file-folder" : "file-folder file-item";
-    itemDiv.textContent = key;
-    itemDiv.addEventListener("dblclick", ()=>{
-      if(isFolder){
-        currentPath.push(key);
-        renderFileExplorer();
-      } else {
-        alert("Opening file: "+key+"\n\nContent:\n"+folder[key]);
-      }
-    });
-    container.appendChild(itemDiv);
-  }
+  requestAnimationFrame(animateParticles);
 }
-
-// Initialize File Explorer
-renderFileExplorer();
+animateParticles();
 </script>
 
 </body>
