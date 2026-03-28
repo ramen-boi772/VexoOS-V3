@@ -5,113 +5,211 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VexoOS</title>
 <style>
-  /* ===== Desktop & Background ===== */
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-    color: #e0e0e0;
-  }
+/* ===== Desktop & Background ===== */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+  color: #e0e0e0;
+}
 
-  canvas#particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-  }
+canvas#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
 
-  #desktop {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 20px;
-    box-sizing: border-box;
-  }
+#desktop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  /* ===== App Icons ===== */
-  .app-icon {
-    width: 100px;
-    height: 100px;
-    margin: 15px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 12px;
-    background: rgba(0,255,163,0.05);
-    border: 1px solid rgba(0,255,163,0.3);
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-  }
+/* ===== App Icons ===== */
+.app-icon {
+  width: 100px;
+  height: 100px;
+  margin: 15px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12px;
+  background: rgba(0,255,163,0.05);
+  border: 1px solid rgba(0,255,163,0.3);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
 
-  .app-icon:hover {
-    transform: translateY(-5px);
-    background: rgba(0,255,163,0.1);
-    box-shadow: 0 6px 20px rgba(0,255,163,0.2);
-  }
+.app-icon:hover {
+  transform: translateY(-5px);
+  background: rgba(0,255,163,0.1);
+  box-shadow: 0 6px 20px rgba(0,255,163,0.2);
+}
 
-  .app-icon img {
-    width: 60%;
-    margin-top: 12px;
-  }
+.app-icon img {
+  width: 60%;
+  margin-top: 12px;
+}
 
-  .app-icon span {
-    display: block;
-    margin-top: 8px;
-    font-size: 0.9em;
-    color: #00ffa3;
-  }
+.app-icon span {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9em;
+  color: #00ffa3;
+}
 
-  /* ===== Windows ===== */
-  .window {
-    position: absolute;
-    width: 600px;
-    height: 400px;
-    background: rgba(0,0,0,0.85);
-    border-radius: 12px;
-    border: 1px solid rgba(0,255,163,0.3);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 30px rgba(0,255,163,0.2);
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-  }
+/* ===== Windows ===== */
+.window {
+  position: absolute;
+  width: 600px;
+  height: 400px;
+  background: rgba(0,0,0,0.85);
+  border-radius: 12px;
+  border: 1px solid rgba(0,255,163,0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0,255,163,0.2);
+  overflow: hidden;
+  display: none;
+  flex-direction: column;
+  z-index: 2;
+}
 
-  .window-header {
-    height: 40px;
-    background: rgba(0,255,163,0.05);
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    cursor: move;
-  }
+.window-header {
+  height: 40px;
+  background: rgba(0,255,163,0.05);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: move;
+}
 
-  .window-header span {
-    color: #00ffa3;
-    font-weight: bold;
-  }
+.window-header span {
+  color: #00ffa3;
+  font-weight: bold;
+}
 
-  .window-close {
-    margin-left: auto;
-    cursor: pointer;
-    font-weight: bold;
-    color: #ff4c4c;
-  }
+.window-close {
+  margin-left: auto;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff4c4c;
+}
 
-  .window-content {
-    flex: 1;
-    background: #1a1a1a;
-    color: #fff;
-    overflow: auto;
-  }
+.window-minimize {
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffc107;
+}
 
+.window-maximize {
+  margin-left: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #00bfff;
+}
+
+.window-content {
+  flex: 1;
+  background: #1a1a1a;
+  color: #fff;
+  overflow: auto;
+}
+
+/* ===== Taskbar ===== */
+#taskbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  box-sizing: border-box;
+  z-index: 3;
+  border-top: 1px solid rgba(0,255,163,0.3);
+}
+
+#start-button {
+  width: 40px;
+  height: 40px;
+  background: rgba(0,255,163,0.05);
+  border: 1px solid rgba(0,255,163,0.3);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#start-button:hover {
+  background: rgba(0,255,163,0.15);
+}
+
+#start-menu {
+  position: absolute;
+  bottom: 50px;
+  left: 10px;
+  width: 200px;
+  background: rgba(0,0,0,0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(0,255,163,0.3);
+  backdrop-filter: blur(10px);
+  display: none;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 4;
+}
+
+#start-menu a {
+  color: #00ffa3;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+#start-menu a:hover {
+  background: rgba(0,255,163,0.1);
+}
+
+/* ===== Taskbar App Icons ===== */
+.taskbar-app {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 8px;
+  background: rgba(0,255,163,0.05);
+  border: 1px solid rgba(0,255,163,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.taskbar-app:hover {
+  background: rgba(0,255,163,0.15);
+}
+
+.taskbar-app img {
+  width: 60%;
+}
 </style>
 </head>
 <body>
@@ -123,38 +221,68 @@
     <img src="https://cdn-icons-png.flaticon.com/512/49/49339.png" alt="Minecraft">
     <span>Minecraft</span>
   </div>
-
   <div class="app-icon" data-app="win12">
     <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Win12">
     <span>Win 12</span>
   </div>
-
   <div class="app-icon" data-app="vexoos">
     <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="VexoOS">
     <span>VexoOS</span>
   </div>
 </div>
 
-<!-- Windows for apps -->
+<!-- Windows -->
 <div class="window" id="minecraft-window">
-  <div class="window-header"><span>Minecraft</span><div class="window-close">✕</div></div>
+  <div class="window-header"><span>Minecraft</span>
+    <div class="window-minimize">–</div>
+    <div class="window-maximize">□</div>
+    <div class="window-close">✕</div>
+  </div>
   <div class="window-content">
     <iframe src="https://turtletown71.github.io" style="width:100%;height:100%;border:none;"></iframe>
   </div>
 </div>
 
 <div class="window" id="win12-window">
-  <div class="window-header"><span>Win 12</span><div class="window-close">✕</div></div>
+  <div class="window-header"><span>Win 12</span>
+    <div class="window-minimize">–</div>
+    <div class="window-maximize">□</div>
+    <div class="window-close">✕</div>
+  </div>
   <div class="window-content">
     <iframe src="https://ramen-boi772.github.io/windows-12/desktop.html" style="width:100%;height:100%;border:none;"></iframe>
   </div>
 </div>
 
 <div class="window" id="vexoos-window">
-  <div class="window-header"><span>VexoOS</span><div class="window-close">✕</div></div>
+  <div class="window-header"><span>VexoOS</span>
+    <div class="window-minimize">–</div>
+    <div class="window-maximize">□</div>
+    <div class="window-close">✕</div>
+  </div>
   <div class="window-content">
     <iframe src="https://ramen-boi772.github.io/VexoOS-V3/" style="width:100%;height:100%;border:none;"></iframe>
   </div>
+</div>
+
+<!-- Taskbar -->
+<div id="taskbar">
+  <div id="start-button">☰</div>
+  <div class="taskbar-app" data-app="minecraft">
+    <img src="https://cdn-icons-png.flaticon.com/512/49/49339.png">
+  </div>
+  <div class="taskbar-app" data-app="win12">
+    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png">
+  </div>
+  <div class="taskbar-app" data-app="vexoos">
+    <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png">
+  </div>
+</div>
+
+<div id="start-menu">
+  <a href="#" data-app="minecraft">Minecraft</a>
+  <a href="#" data-app="win12">Win 12</a>
+  <a href="#" data-app="vexoos">VexoOS</a>
 </div>
 
 <script>
@@ -165,17 +293,10 @@ let particlesArray = [];
 let mouseX = 0;
 let mouseY = 0;
 
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
+document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 
-window.addEventListener('resize', () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
 
 class Particle {
   constructor() {
@@ -186,7 +307,7 @@ class Particle {
     this.speedX = (Math.random() - 0.5) * 0.6;
     this.speedY = (Math.random() - 0.5) * 0.6;
     this.color = `rgba(0,255,163,${Math.random()*0.5 + 0.3})`;
-    this.pulseAngle = Math.random() * Math.PI*2;
+    this.pulseAngle = Math.random()*Math.PI*2;
     this.pulseSpeed = Math.random()*0.03+0.01;
     this.pulseRange = Math.random()*1+0.5;
     this.depthFactor = Math.random()*0.2+0.1;
@@ -216,9 +337,7 @@ class Particle {
 
 function initParticles(count=80){
   particlesArray=[];
-  for(let i=0;i<count;i++){
-    particlesArray.push(new Particle());
-  }
+  for(let i=0;i<count;i++){ particlesArray.push(new Particle()); }
 }
 
 function connectParticles(maxDistance=120){
@@ -249,47 +368,63 @@ function animateParticles(){
 initParticles();
 animateParticles();
 
-/* ===== Window Open/Close ===== */
-const appIcons = document.querySelectorAll('.app-icon');
+/* ===== App & Window Logic ===== */
+const appIcons = document.querySelectorAll('.app-icon, .taskbar-app, #start-menu a');
 const windows = document.querySelectorAll('.window');
 
 appIcons.forEach(icon => {
-  icon.addEventListener('click', () => {
+  icon.addEventListener('click', e => {
     const app = icon.dataset.app;
+    if(!app) return;
     const win = document.getElementById(`${app}-window`);
     win.style.display = 'flex';
     win.style.top = '50px';
     win.style.left = '50px';
+    win.style.zIndex = 5;
   });
 });
 
+/* Window controls */
 windows.forEach(win => {
   const close = win.querySelector('.window-close');
+  const minimize = win.querySelector('.window-minimize');
+  const maximize = win.querySelector('.window-maximize');
   close.addEventListener('click', () => win.style.display='none');
+  minimize.addEventListener('click', () => win.style.display='none');
+  maximize.addEventListener('click', () => {
+    if(win.style.width === '100%') {
+      win.style.width='600px'; win.style.height='400px';
+      win.style.top='50px'; win.style.left='50px';
+    } else {
+      win.style.width='100%'; win.style.height='100%';
+      win.style.top='0'; win.style.left='0';
+    }
+  });
 });
 
-/* ===== Dragging Windows ===== */
-let dragTarget = null;
-let offsetX = 0;
-let offsetY = 0;
-
-document.addEventListener('mousedown', e => {
+/* Dragging windows */
+let dragTarget = null, offsetX=0, offsetY=0;
+document.addEventListener('mousedown', e=>{
   if(e.target.classList.contains('window-header') || e.target.parentElement.classList.contains('window-header')){
     dragTarget = e.target.closest('.window');
     offsetX = e.clientX - dragTarget.offsetLeft;
     offsetY = e.clientY - dragTarget.offsetTop;
   }
 });
-
-document.addEventListener('mousemove', e => {
+document.addEventListener('mousemove', e=>{
   if(dragTarget){
     dragTarget.style.left = `${e.clientX-offsetX}px`;
     dragTarget.style.top = `${e.clientY-offsetY}px`;
   }
 });
-
 document.addEventListener('mouseup', ()=> dragTarget=null);
 
+/* Start menu toggle */
+const startButton = document.getElementById('start-button');
+const startMenu = document.getElementById('start-menu');
+startButton.addEventListener('click', ()=> {
+  startMenu.style.display = startMenu.style.display==='flex'?'none':'flex';
+});
 </script>
 </body>
 </html>
