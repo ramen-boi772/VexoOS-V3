@@ -165,7 +165,7 @@ canvas#particles {
   position: absolute;
   bottom: 50px;
   left: 10px;
-  width: 200px;
+  width: 250px;
   background: rgba(0,0,0,0.9);
   border-radius: 12px;
   border: 1px solid rgba(0,255,163,0.3);
@@ -217,72 +217,83 @@ canvas#particles {
 <canvas id="particles"></canvas>
 
 <div id="desktop">
-  <div class="app-icon" data-app="minecraft">
-    <img src="https://cdn-icons-png.flaticon.com/512/49/49339.png" alt="Minecraft">
-    <span>Minecraft</span>
-  </div>
-  <div class="app-icon" data-app="win12">
-    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Win12">
-    <span>Win 12</span>
-  </div>
-  <div class="app-icon" data-app="vexoos">
-    <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="VexoOS">
-    <span>VexoOS</span>
-  </div>
+  <!-- Original Apps -->
+  <div class="app-icon" data-app="minecraft"><img src="https://cdn-icons-png.flaticon.com/512/49/49339.png" alt="Minecraft"><span>Minecraft</span></div>
+  <div class="app-icon" data-app="win12"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" alt="Win12"><span>Win12</span></div>
+  <div class="app-icon" data-app="vexoos"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="VexoOS"><span>VexoOS</span></div>
+
+  <!-- Extra Apps from Start Menu -->
+  <div class="app-icon" data-app="link1"><img src="https://cdn-icons-png.flaticon.com/512/833/833524.png"><span>Minecraft DL</span></div>
+  <div class="app-icon" data-app="link2"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"><span>Minecraft Beta</span></div>
+  <div class="app-icon" data-app="link3"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"><span>Fern</span></div>
+  <div class="app-icon" data-app="link4"><img src="https://cdn-icons-png.flaticon.com/512/1082/1082602.png"><span>OPEN WEB</span></div>
+  <div class="app-icon" data-app="link5"><img src="https://cdn-icons-png.flaticon.com/512/685/685655.png"><span>Games</span></div>
+  <div class="app-icon" data-app="link6"><img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png"><span>Unblocked</span></div>
+  <div class="app-icon" data-app="link7"><img src="https://cdn-icons-png.flaticon.com/512/1792/1792767.png"><span>More Games</span></div>
+  <div class="app-icon" data-app="link8"><img src="https://cdn-icons-png.flaticon.com/512/196/196578.png"><span>Launcher</span></div>
+  <div class="app-icon" data-app="link9"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png"><span>Win 12</span></div>
+  <div class="app-icon" data-app="link10"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png"><span>VexoOS</span></div>
 </div>
 
-<!-- Windows -->
+<!-- Windows (All Apps) -->
 <div class="window" id="minecraft-window">
-  <div class="window-header"><span>Minecraft</span>
-    <div class="window-minimize">–</div>
-    <div class="window-maximize">□</div>
-    <div class="window-close">✕</div>
-  </div>
-  <div class="window-content">
-    <iframe src="https://turtletown71.github.io" style="width:100%;height:100%;border:none;"></iframe>
-  </div>
+  <div class="window-header"><span>Minecraft</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div>
+  <div class="window-content"><iframe src="https://turtletown71.github.io" style="width:100%;height:100%;border:none;"></iframe></div>
 </div>
 
 <div class="window" id="win12-window">
-  <div class="window-header"><span>Win 12</span>
-    <div class="window-minimize">–</div>
-    <div class="window-maximize">□</div>
-    <div class="window-close">✕</div>
-  </div>
-  <div class="window-content">
-    <iframe src="https://ramen-boi772.github.io/windows-12/desktop.html" style="width:100%;height:100%;border:none;"></iframe>
-  </div>
+  <div class="window-header"><span>Win12</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div>
+  <div class="window-content"><iframe src="https://ramen-boi772.github.io/windows-12/desktop.html" style="width:100%;height:100%;border:none;"></iframe></div>
 </div>
 
 <div class="window" id="vexoos-window">
-  <div class="window-header"><span>VexoOS</span>
-    <div class="window-minimize">–</div>
-    <div class="window-maximize">□</div>
-    <div class="window-close">✕</div>
-  </div>
-  <div class="window-content">
-    <iframe src="https://ramen-boi772.github.io/VexoOS-V3/" style="width:100%;height:100%;border:none;"></iframe>
-  </div>
+  <div class="window-header"><span>VexoOS</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div>
+  <div class="window-content"><iframe src="https://ramen-boi772.github.io/VexoOS-V3/" style="width:100%;height:100%;border:none;"></iframe></div>
 </div>
+
+<!-- Extra Windows for links -->
+<div class="window" id="link1-window"><div class="window-header"><span>Minecraft Downloads</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://www.mediafire.com/file/1hqtjm6a07i76rn/Eagler.zip/file" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link2-window"><div class="window-header"><span>Minecraft Beta</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://turtletown71.github.io" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link3-window"><div class="window-header"><span>Fern</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://orange1.freeddns.us" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link4-window"><div class="window-header"><span>OPEN WEB</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://overcloak.plyrnation.martinwguy.net" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link5-window"><div class="window-header"><span>Games</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://basketball-stars-game.github.io/" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link6-window"><div class="window-header"><span>Unblocked Games</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://unblockedgames76-pro.github.io" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link7-window"><div class="window-header"><span>More Unblocked Games</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://pn.martinwguy.net" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link8-window"><div class="window-header"><span>Launcher</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://ramen-boi772.github.io/launcher-le-eaglercraft/" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link9-window"><div class="window-header"><span>Win12</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://ramen-boi772.github.io/windows-12/desktop.html" style="width:100%;height:100%;border:none;"></iframe></div></div>
+<div class="window" id="link10-window"><div class="window-header"><span>VexoOS</span><div class="window-minimize">–</div><div class="window-maximize">□</div><div class="window-close">✕</div></div><div class="window-content"><iframe src="https://ramen-boi772.github.io/VexoOS-V3/" style="width:100%;height:100%;border:none;"></iframe></div></div>
 
 <!-- Taskbar -->
 <div id="taskbar">
   <div id="start-button">☰</div>
-  <div class="taskbar-app" data-app="minecraft">
-    <img src="https://cdn-icons-png.flaticon.com/512/49/49339.png">
-  </div>
-  <div class="taskbar-app" data-app="win12">
-    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png">
-  </div>
-  <div class="taskbar-app" data-app="vexoos">
-    <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png">
-  </div>
+  <!-- Taskbar icons for all apps -->
+  <div class="taskbar-app" data-app="minecraft"><img src="https://cdn-icons-png.flaticon.com/512/49/49339.png"></div>
+  <div class="taskbar-app" data-app="win12"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png"></div>
+  <div class="taskbar-app" data-app="vexoos"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png"></div>
+  <div class="taskbar-app" data-app="link1"><img src="https://cdn-icons-png.flaticon.com/512/833/833524.png"></div>
+  <div class="taskbar-app" data-app="link2"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png"></div>
+  <div class="taskbar-app" data-app="link3"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"></div>
+  <div class="taskbar-app" data-app="link4"><img src="https://cdn-icons-png.flaticon.com/512/1082/1082602.png"></div>
+  <div class="taskbar-app" data-app="link5"><img src="https://cdn-icons-png.flaticon.com/512/685/685655.png"></div>
+  <div class="taskbar-app" data-app="link6"><img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png"></div>
+  <div class="taskbar-app" data-app="link7"><img src="https://cdn-icons-png.flaticon.com/512/1792/1792767.png"></div>
+  <div class="taskbar-app" data-app="link8"><img src="https://cdn-icons-png.flaticon.com/512/196/196578.png"></div>
+  <div class="taskbar-app" data-app="link9"><img src="https://cdn-icons-png.flaticon.com/512/888/888879.png"></div>
+  <div class="taskbar-app" data-app="link10"><img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png"></div>
 </div>
 
+<!-- Start Menu -->
 <div id="start-menu">
-  <a href="#" data-app="minecraft">Minecraft</a>
-  <a href="#" data-app="win12">Win 12</a>
-  <a href="#" data-app="vexoos">VexoOS</a>
+  <a href="#" data-app="link1">Minecraft Downloads</a>
+  <a href="#" data-app="link2">Minecraft Beta</a>
+  <a href="#" data-app="link3">Fern</a>
+  <a href="#" data-app="link4">OPEN WEB</a>
+  <a href="#" data-app="link5">Games</a>
+  <a href="#" data-app="link6">Unblocked Games</a>
+  <a href="#" data-app="link7">More Unblocked Games</a>
+  <a href="#" data-app="link8">Launcher</a>
+  <a href="#" data-app="link9">Win12</a>
+  <a href="#" data-app="link10">VexoOS</a>
 </div>
 
 <script>
@@ -290,141 +301,125 @@ canvas#particles {
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particlesArray = [];
-let mouseX = 0;
-let mouseY = 0;
 
-document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
 class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.baseSize = Math.random() * 3 + 1.5;
-    this.size = this.baseSize;
-    this.speedX = (Math.random() - 0.5) * 0.6;
-    this.speedY = (Math.random() - 0.5) * 0.6;
-    this.color = `rgba(0,255,163,${Math.random()*0.5 + 0.3})`;
-    this.pulseAngle = Math.random()*Math.PI*2;
-    this.pulseSpeed = Math.random()*0.03+0.01;
-    this.pulseRange = Math.random()*1+0.5;
-    this.depthFactor = Math.random()*0.2+0.1;
-    this.swayOffset = Math.random()*1000;
+  constructor(x,y) {
+    this.x = x;
+    this.y = y;
+    this.size = Math.random()*3+1;
+    this.speedX = Math.random()*1-0.5;
+    this.speedY = Math.random()*1-0.5;
   }
   update() {
-    this.x += this.speedX + Math.sin(Date.now()*0.001 + this.swayOffset)*0.5;
-    this.y += this.speedY + Math.cos(Date.now()*0.001 + this.swayOffset)*0.5;
-    if(this.x<0)this.x=canvas.width;
-    if(this.x>canvas.width)this.x=0;
-    if(this.y<0)this.y=canvas.height;
-    if(this.y>canvas.height)this.y=0;
-    this.pulseAngle += this.pulseSpeed;
-    this.size = this.baseSize + Math.sin(this.pulseAngle)*this.pulseRange;
-    this.parallaxX = (mouseX-canvas.width/2)*this.depthFactor;
-    this.parallaxY = (mouseY-canvas.height/2)*this.depthFactor;
+    this.x += this.speedX;
+    this.y += this.speedY;
+    if(this.size > 0.2) this.size -= 0.1;
   }
   draw() {
-    ctx.fillStyle = this.color;
-    ctx.shadowColor = this.color;
-    ctx.shadowBlur = 4;
+    ctx.fillStyle = 'rgba(0,255,163,0.8)';
     ctx.beginPath();
-    ctx.arc(this.x+this.parallaxX,this.y+this.parallaxY,this.size,0,Math.PI*2);
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
     ctx.fill();
   }
 }
 
-function initParticles(count=80){
-  particlesArray=[];
-  for(let i=0;i<count;i++){ particlesArray.push(new Particle()); }
-}
-
-function connectParticles(maxDistance=120){
-  for(let a=0;a<particlesArray.length;a++){
-    for(let b=a+1;b<particlesArray.length;b++){
-      const dx = (particlesArray[a].x+particlesArray[a].parallaxX)-(particlesArray[b].x+particlesArray[b].parallaxX);
-      const dy = (particlesArray[a].y+particlesArray[a].parallaxY)-(particlesArray[b].y+particlesArray[b].parallaxY);
-      const distance = Math.sqrt(dx*dx+dy*dy);
-      if(distance<maxDistance){
-        ctx.strokeStyle = `rgba(0,255,163,${1-distance/maxDistance})`;
-        ctx.lineWidth = 0.6;
-        ctx.beginPath();
-        ctx.moveTo(particlesArray[a].x+particlesArray[a].parallaxX,particlesArray[a].y+particlesArray[a].parallaxY);
-        ctx.lineTo(particlesArray[b].x+particlesArray[b].parallaxX,particlesArray[b].y+particlesArray[b].parallaxY);
-        ctx.stroke();
-      }
-    }
+function initParticles() {
+  for(let i=0;i<100;i++) {
+    let x = Math.random()*canvas.width;
+    let y = Math.random()*canvas.height;
+    particlesArray.push(new Particle(x,y));
   }
 }
 
-function animateParticles(){
+function handleParticles() {
+  for(let i=0;i<particlesArray.length;i++){
+    particlesArray[i].update();
+    particlesArray[i].draw();
+  }
+}
+
+function animate() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
-  particlesArray.forEach(p=>{p.update();p.draw();});
-  connectParticles();
-  requestAnimationFrame(animateParticles);
+  handleParticles();
+  requestAnimationFrame(animate);
 }
 
 initParticles();
-animateParticles();
+animate();
 
-/* ===== App & Window Logic ===== */
-const appIcons = document.querySelectorAll('.app-icon, .taskbar-app, #start-menu a');
+/* ===== Window Drag & Control ===== */
+let zIndexCounter = 10;
 const windows = document.querySelectorAll('.window');
+const appIcons = document.querySelectorAll('.app-icon');
+const taskbarApps = document.querySelectorAll('.taskbar-app');
+const startButton = document.getElementById('start-button');
+const startMenu = document.getElementById('start-menu');
+
+function openWindow(id) {
+  const win = document.getElementById(id + '-window');
+  if(!win) return;
+  win.style.display = 'flex';
+  win.style.zIndex = ++zIndexCounter;
+}
 
 appIcons.forEach(icon => {
-  icon.addEventListener('click', e => {
-    const app = icon.dataset.app;
-    if(!app) return;
-    const win = document.getElementById(`${app}-window`);
-    win.style.display = 'flex';
-    win.style.top = '50px';
-    win.style.left = '50px';
-    win.style.zIndex = 5;
+  icon.addEventListener('click',()=>{ openWindow(icon.dataset.app); });
+});
+
+taskbarApps.forEach(icon => {
+  icon.addEventListener('click',()=>{ openWindow(icon.dataset.app); });
+});
+
+startMenu.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',(e)=>{
+    e.preventDefault();
+    openWindow(link.dataset.app);
+    startMenu.style.display='none';
   });
 });
 
-/* Window controls */
-windows.forEach(win => {
-  const close = win.querySelector('.window-close');
-  const minimize = win.querySelector('.window-minimize');
-  const maximize = win.querySelector('.window-maximize');
-  close.addEventListener('click', () => win.style.display='none');
-  minimize.addEventListener('click', () => win.style.display='none');
-  maximize.addEventListener('click', () => {
-    if(win.style.width === '100%') {
-      win.style.width='600px'; win.style.height='400px';
-      win.style.top='50px'; win.style.left='50px';
-    } else {
-      win.style.width='100%'; win.style.height='100%';
+startButton.addEventListener('click',()=>{ startMenu.style.display = startMenu.style.display==='flex'?'none':'flex'; });
+
+windows.forEach(win=>{
+  const header = win.querySelector('.window-header');
+  const closeBtn = win.querySelector('.window-close');
+  const minBtn = win.querySelector('.window-minimize');
+  const maxBtn = win.querySelector('.window-maximize');
+  let isMaximized = false;
+  let offsetX=0, offsetY=0;
+
+  header.addEventListener('mousedown', e=>{
+    offsetX = e.clientX - win.offsetLeft;
+    offsetY = e.clientY - win.offsetTop;
+
+    function move(e){
+      win.style.left = (e.clientX-offsetX)+'px';
+      win.style.top = (e.clientY-offsetY)+'px';
+    }
+
+    function up(){ document.removeEventListener('mousemove',move); document.removeEventListener('mouseup',up);}
+    document.addEventListener('mousemove',move);
+    document.addEventListener('mouseup',up);
+  });
+
+  closeBtn.addEventListener('click',()=>{win.style.display='none';});
+  minBtn.addEventListener('click',()=>{win.style.display='none';});
+  maxBtn.addEventListener('click',()=>{
+    if(!isMaximized){
       win.style.top='0'; win.style.left='0';
+      win.style.width='100%'; win.style.height='calc(100% - 50px)';
+      isMaximized=true;
+    }else{
+      win.style.width='600px'; win.style.height='400px';
+      win.style.top='100px'; win.style.left='100px';
+      isMaximized=false;
     }
   });
 });
-
-/* Dragging windows */
-let dragTarget = null, offsetX=0, offsetY=0;
-document.addEventListener('mousedown', e=>{
-  if(e.target.classList.contains('window-header') || e.target.parentElement.classList.contains('window-header')){
-    dragTarget = e.target.closest('.window');
-    offsetX = e.clientX - dragTarget.offsetLeft;
-    offsetY = e.clientY - dragTarget.offsetTop;
-  }
-});
-document.addEventListener('mousemove', e=>{
-  if(dragTarget){
-    dragTarget.style.left = `${e.clientX-offsetX}px`;
-    dragTarget.style.top = `${e.clientY-offsetY}px`;
-  }
-});
-document.addEventListener('mouseup', ()=> dragTarget=null);
-
-/* Start menu toggle */
-const startButton = document.getElementById('start-button');
-const startMenu = document.getElementById('start-menu');
-startButton.addEventListener('click', ()=> {
-  startMenu.style.display = startMenu.style.display==='flex'?'none':'flex';
-});
 </script>
+
 </body>
 </html>
